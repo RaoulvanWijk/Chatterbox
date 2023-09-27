@@ -66,6 +66,9 @@
   border-radius: 5px;
 }
 
-.text-main {
-  color: var(--color-blue-text);
+.disclaimer {
+  margin-top: .5rem;
+  span {
+    color: var(--color-blue-text);
+  }
 }
