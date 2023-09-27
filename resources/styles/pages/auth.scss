@@ -1,3 +1,5 @@
+// @import '../utils/colors.scss';
+
 .auth-container {
   height: 100vh;
   width: 100vw;
@@ -8,12 +10,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #DBDEE1;
+  color: var(--color-prim-text);
   
   .auth-form {
     display: flex;
     flex-direction: column;
-    background-color: #313338;
+    background-color: var(--color-prim-bg);
     border-radius: 15px;
     padding: 4rem 4rem 2rem 4rem;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -23,8 +25,8 @@
     input {
       margin-bottom: 1rem;
       height: 3.75rem;
-      background-color: #D9D9D9;
-      color: black;
+      background-color: var(--color-reverse-bg);
+      color: var(--color-reverse-text);
       border-radius: 5px;
 
       &:last-of-type {
@@ -54,8 +56,8 @@
 }
 
 .main-btn {
-  background-color: #5865F2;
-  color: #FEFEFE;
+  background-color: var(--color-btn-main);
+  color: var(--color-btn-text);
   text-align: center;
   // font-size: 1rem;
   font-size: 1.5rem;
@@ -65,5 +67,5 @@
 }
 
 .text-main {
-  color: #00A8FC;
+  color: var(--color-blue-text);
 }

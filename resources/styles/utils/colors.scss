@@ -1,0 +1,45 @@
+:root {
+  --color-prim-bg-dark: #313338;
+  --color-prim-bg-light: #D9D9D9;
+  --color-prim-text-dark: #DBDEE1;
+  --color-prim-text-light: #000000;
+
+  --color-btn-main: #5865F2;
+  --color-btn-text: #FEFEFE;
+  --color-blue-text: #00A8FC;
+}
+
+// if darkmode is disabled, use these colors
+
+  :root {
+    --color-prim-bg: var(--color-prim-bg-light);
+    --color-prim-text: var(--color-prim-text-light);
+    --color-reverse-bg: var(--color-prim-bg-dark);
+    --color-reverse-text: var(--color-prim-bg-dark);
+  }
+
+// if darkmode is enabled, use these colors
+
+@media screen and (prefers-color-scheme: dark) {
+  :root {
+    --color-prim-bg: var(--color-prim-bg-dark);
+    --color-prim-text: var(--color-prim-text-dark);
+    --color-reverse-bg: var(--color-prim-bg-light);
+    --color-reverse-text: var(--color-prim-bg-light);
+  }
+}
+
+// .dark-mode {
+//   --color-prim-bg: var(--color-prim-bg-dark);
+//   --color-prim-text: var(--color-prim-text-dark);
+//   --color-reverse-bg: var(--color-prim-bg-light);
+//   --color-reverse-text: var(--color-prim-bg-light);
+// }
+
+// .light-mode {
+//   --color-prim-bg: var(--color-prim-bg-light);
+//   --color-prim-text: var(--color-prim-text-light);
+//   --color-reverse-bg: var(--color-prim-bg-dark);
+//   --color-reverse-text: var(--color-prim-bg-dark);
+// }
+
