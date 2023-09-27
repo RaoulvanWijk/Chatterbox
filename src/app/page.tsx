@@ -1,9 +1,13 @@
-import SignIn from "@/components/auth/SignIn";
+"use client";
+
+import Image from 'next/image'
+import { useSession, signIn, signOut } from "next-auth/react";
+
 
 export default function Home() {
   return (
     <>
-      <SignIn />
+      <button onClick={() => signIn()}>Login</button>
     </>
   )
 }

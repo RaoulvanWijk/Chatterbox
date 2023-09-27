@@ -1,15 +1,19 @@
 import type { Config } from "drizzle-kit";
-import { env } from "@/lib/env.mjs";
+import dotenv from "dotenv";
+
+dotenv.config({
+  path: '.env.local'
+});
 
 export default {
   schema: "./src/lib/db/schema",
   out: "./src/lib/db/migrations",
   driver: "mysql2",
   dbCredentials: {
-    host: env.DATABASE_HOST,
+    host: process.env.DATABASE_HOST as string,
     port: 3306,
-    user: env.DATABASE_USER,
-    password: env.DATABASE_PASSWORD,
-    database: env.DATABASE_NAME,
+    user: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASSWORD,
+    database: process.env.DATABASE_NAME as string,
   }
 } satisfies Config;
