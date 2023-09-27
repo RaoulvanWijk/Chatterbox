@@ -15,7 +15,7 @@ export default function login() {
       </label>
       <input type="password" name="password" id="password" />
       <button className='main-btn' type="submit">Login</button>
-      <Link href='/auth/register'>Don't have an account yet? <span className='text-main'>Register</span></Link>
+      <Link className='disclaimer' href='/auth/register'>Don't have an account yet? <span>Register</span></Link>
     </form>
   )
 }
