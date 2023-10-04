@@ -13,6 +13,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "typeRoots": ["./node_modules/@types", "./node_modules/next-auth/core"],
     "plugins": [
       {
         "name": "next"
@@ -23,6 +24,6 @@
       "@resources/*": ["./resources/*"],
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "./src/lib/types/**/*.ts"],
   "exclude": ["node_modules"]
 }
