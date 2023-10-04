@@ -16,6 +16,7 @@
     "db:check": "drizzle-kit check:mysql"
   },
   "dependencies": {
+    "@auth/drizzle-adapter": "^0.3.2",
     "@hookform/resolvers": "^3.3.1",
     "@types/node": "20.6.3",
     "@types/react": "18.2.22",
