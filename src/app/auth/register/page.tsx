@@ -18,7 +18,6 @@ export default function register() {
   });
 
   const onSubmit = async (data: TRegisterSchema) => {
-    console.log(data);
     const res = await fetch("/api/auth/register", {
       method: "POST",
       headers: {
