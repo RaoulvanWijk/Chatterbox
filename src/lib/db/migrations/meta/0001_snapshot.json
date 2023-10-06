@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "713240de-67f9-4ef0-bdbc-01541eeac0e2",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "8e6fb0f1-e9bb-48d5-9511-d9ac81abe2e6",
+  "prevId": "713240de-67f9-4ef0-bdbc-01541eeac0e2",
   "tables": {
     "user": {
       "name": "user",
@@ -23,7 +23,7 @@
         },
         "tag": {
           "name": "tag",
-          "type": "tinyint",
+          "type": "smallint",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
