@@ -1,27 +1,31 @@
 import { NextRequest, NextResponse } from "next/server";
 import { registerSchema, TRegisterSchema } from "@/lib/types/zodSchemes";
-import { DrizzleAdapter } from "@/lib/db/dbAdaper";
 import { db } from "@/lib/db/index";
+import { User } from "@/lib/db/models/user";
 
 import bcrypt from 'bcryptjs';
 
-import { decode } from 'next-auth/jwt';
-
 export async function POST(request: NextRequest) {
-    // log request body to app/logs/request
-    const body = await request.json();
-
-    // validate body
+    const body = await request.json()
     const res = registerSchema.safeParse(body);
 
+    console.log(res, request.body)
     if (!res.success) {
-        return NextResponse.json(res.error, { status: 400 })
+        return NextResponse.json({ message: 'test' })
     }
 
-    res.data.password = await bcrypt.hash(res.data.password, 10);
-    const da: any = DrizzleAdapter(db);
-    // create user
-    const user = await da.createUser(res.data as TRegisterSchema);
+    try {
+        const user = new User(db);
+        const hashedPassword = await bcrypt.hash(res.data.password, 12);
+        const result = await user.createUser({ ...res.data, password: hashedPassword });
+
+        console.log(result)
+    } catch(err: unknown) {
+        console.log(err)
+    }
+
+
+    
 
     return NextResponse.json({ message: 'test' })
 }
