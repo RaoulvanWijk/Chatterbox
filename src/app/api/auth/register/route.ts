@@ -8,8 +8,7 @@ import bcrypt from 'bcryptjs';
 export async function POST(request: NextRequest) {
     const body = await request.json()
     const res = registerSchema.safeParse(body);
-
-    console.log(res, request.body)
+    
     if (!res.success) {
         return NextResponse.json({ message: 'test' })
     }
@@ -18,8 +17,6 @@ export async function POST(request: NextRequest) {
         const user = new User(db);
         const hashedPassword = await bcrypt.hash(res.data.password, 12);
         const result = await user.createUser({ ...res.data, password: hashedPassword });
-
-        console.log(result)
     } catch(err: unknown) {
         console.log(err)
     }
