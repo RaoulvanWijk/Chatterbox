@@ -6,13 +6,13 @@ const authRoutes = ["/auth/login", "/auth/register"];
 
 export async function middleware(request: NextRequest) {
   if (
-    request.nextUrl.pathname === "/auth/login" ||
-    request.nextUrl.pathname === "/auth/register"
+    (request.nextUrl.pathname === "/auth/login" ||
+    request.nextUrl.pathname === "/auth/register") && request.cookies.get("authToken") == undefined
   ) {
     return NextResponse.next();
   }
 
-  if (request.nextUrl.pathname.startsWith("/app")) {
+  if (request.nextUrl.pathname.startsWith("/app") || request.nextUrl.pathname.startsWith("/auth")) {
     const authToken = request.cookies.get("authToken");
 
     if (!authToken) {
@@ -23,6 +23,12 @@ export async function middleware(request: NextRequest) {
         authToken.value,
         new TextEncoder().encode(process.env.JWT_SECRET)
       );
+      if (
+        request.nextUrl.pathname === "/auth/login" ||
+        request.nextUrl.pathname === "/auth/register"
+      ) {
+        return NextResponse.redirect(new URL("/app/channels/@me", request.nextUrl));
+      }
       return NextResponse.next();
     } catch (err) {
       return NextResponse.redirect(new URL("/auth/login", request.nextUrl), {
