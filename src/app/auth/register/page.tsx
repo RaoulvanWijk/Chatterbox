@@ -5,8 +5,10 @@ import Link from "next/link";
 import { registerSchema, TRegisterSchema } from "@/lib/types/zodSchemes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 export default function register() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -30,11 +32,13 @@ export default function register() {
 
     if (!res.ok) {
       // response status is not 2xx
-      alert(
-        "Something went wrong while submitting the form. Please try again later."
-      );
+      setError("password", {
+        type: "manual",
+        message: "Wrong password or email",
+      });
       return;
     }
+    router.push("/app/channels/@me");
   };
 
   return (
