@@ -29,8 +29,6 @@ export default function login() {
     });
     const resData = await res.json();
 
-    console.log(res, resData);
-
     if (!res.ok) {
       // response status is not 2xx
 
