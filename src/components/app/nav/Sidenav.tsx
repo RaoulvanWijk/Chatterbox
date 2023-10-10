@@ -15,13 +15,13 @@ export default function Sidenav() {
         <NavItem href={'/app/channels/1/1'} name={'SC'} />
         <NavItem href={'/app/channels/1/1'} name={'SC'} />
         <NavItem href={'/app/channels/1/1'} name={'SC'} />
+        {/* <NavItem href={'/app/channels/1/1'} name={'SC'} />
         <NavItem href={'/app/channels/1/1'} name={'SC'} />
         <NavItem href={'/app/channels/1/1'} name={'SC'} />
         <NavItem href={'/app/channels/1/1'} name={'SC'} />
         <NavItem href={'/app/channels/1/1'} name={'SC'} />
         <NavItem href={'/app/channels/1/1'} name={'SC'} />
-        <NavItem href={'/app/channels/1/1'} name={'SC'} />
-        <NavItem href={'/app/channels/1/1'} name={'SC'} />
+        <NavItem href={'/app/channels/1/1'} name={'SC'} /> */}
       </ul>
     </nav>
   )

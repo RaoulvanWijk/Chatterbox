@@ -1,6 +1,8 @@
 :root {
   --color-prim-bg-dark: #313338;
+  --color-secondary-bg-dark: #1e1f22bf;
   --color-prim-bg-light: #D9D9D9;
+  --color-secondary-bg-light: #d9d9d9bf;
   --color-prim-text-dark: #DBDEE1;
   --color-prim-text-light: #000000;
 
@@ -13,6 +15,7 @@
 
   :root {
     --color-prim-bg: var(--color-prim-bg-light);
+    --color-secondary-bg: var(--color-secondary-bg-light);
     --color-prim-text: var(--color-prim-text-light);
     --color-reverse-bg: var(--color-prim-bg-dark);
     --color-reverse-text: var(--color-prim-text-dark);
@@ -24,6 +27,7 @@
   :root {
     --color-prim-bg: var(--color-prim-bg-dark);
     --color-prim-text: var(--color-prim-text-dark);
+    --color-secondary-bg: var(--color-secondary-bg-dark);
     --color-reverse-bg: var(--color-prim-bg-light);
     --color-reverse-text: var(--color-prim-text-light);
   }
