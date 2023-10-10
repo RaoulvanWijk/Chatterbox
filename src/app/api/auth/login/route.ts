@@ -10,7 +10,6 @@ export async function POST(request: NextRequest) {
 
     const res = loginSchema.safeParse(body);
 
-    console.log(res, body)
     if (!res.success) {
         return NextResponse.json({ message: 'test' })
     }
