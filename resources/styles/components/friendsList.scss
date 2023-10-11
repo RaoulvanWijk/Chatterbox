@@ -1,8 +1,58 @@
+@import '../utils/scrollbar.scss';
+
 .friends-list {
     display: flex;
     flex-direction: column;
     padding: .75rem;
     gap: .75rem;
+    overflow: hidden;
+
+    .friends-container {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        // height: calc(100vh - 5rem);
+        // gap: .75rem;
+        color: var(--color-prim-text);
+        
+        p {
+            padding: .75rem;
+        }
+
+        ul {
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+
+            @apply scrollbar;
+            gap: .25rem;
+        }
+    }
+}
+
+.friend-item {
+    a {
+        display: flex;
+        flex-direction: row;
+        gap: .5rem;
+        align-items: center;
+        padding: .5rem;
+        border-radius: .5rem;
+
+        transition: all 200ms ease-in-out;
+        transition-delay: 25ms;
+        span {
+            display: block;
+            border-radius: 10rem;
+            font-size: .8em;
+            padding: .5rem;
+            background-color: var(--color-btn-main);
+        }
+    }
+
+    &.active a, &:hover a {
+        background-color: var(--color-prim-bg);
+    }
 }
 
 .conversation-btn {
@@ -31,11 +81,29 @@
     font-weight: 600;
 }
 
-.friends-container {
-    display: flex;
-    flex-direction: column;
-    gap: .75rem;
-    padding: .75rem;
 
+.user-display {
+    display: flex;
+    flex-direction: row;
+    margin-top: auto;
+    align-items: center;
     color: var(--color-prim-text);
+    > p {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: .5rem;
+        span {
+            display: block;
+            border-radius: 10rem;
+            font-size: .8em;
+            padding: .5rem;
+            background-color: var(--color-btn-main);
+        }
+    }
+
+    .settings-btn {
+        margin-left: auto;
+        cursor: pointer;
+    }
 }
