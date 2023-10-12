@@ -42,7 +42,6 @@ export default function FriendslistNav() {
           <FriendItem user={user} />
           <FriendItem user={user} />
           <FriendItem user={user} />
-          {/* <FriendItem user={user} />
           <FriendItem user={user} />
           <FriendItem user={user} />
           <FriendItem user={user} />
@@ -60,7 +59,8 @@ export default function FriendslistNav() {
           <FriendItem user={user} />
           <FriendItem user={user} />
           <FriendItem user={user} />
-          <FriendItem user={user} /> */}
+          <FriendItem user={user} />
+          <FriendItem user={user} />
         </ul>
       </div>
 
