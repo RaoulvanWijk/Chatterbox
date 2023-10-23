@@ -7,13 +7,38 @@ import {
     varchar,
     MySqlTableFn,
     MySqlDatabase,
-  } from "drizzle-orm/mysql-core"
-  import { and, eq } from "drizzle-orm"
+} from "drizzle-orm/mysql-core"
+import { and, eq } from "drizzle-orm"
 
 export interface IUser {
     username: string;
     password: string;
     email: string;
+}
+
+// [
+//     ResultSetHeader {
+//       fieldCount: 0,
+//       affectedRows: 1,
+//       insertId: 6,
+//       info: '',
+//       serverStatus: 2,
+//       warningStatus: 0,
+//       changedRows: 0
+//     },
+//     undefined
+//   ]
+
+type insertResult = {
+    0 : {
+        fieldCount: number,
+        affectedRows: number,
+        insertId: number,
+        info: string,
+        serverStatus: number,
+        warningStatus: number,
+        changedRows: number
+    }
 }
 
 export class User {
@@ -37,28 +62,25 @@ export class User {
             throw new Error("User already exists")
         }
 
-        // generate random id
-        const id = crypto.randomUUID()
 
         // generate random tag
         const randTag = await this.generateTag(data.username)
         console.log(randTag);
-        
+
         // create user credentials object
         const userCredentials = {
             ...data,
-            id,
             tag: randTag,
         }
 
         // insert user into database
-        await this.client.insert(users).values(userCredentials)
+        const id = await this.client.insert(users).values(userCredentials).execute() as insertResult
 
         // return user credentials
         return await this.client
             .select()
             .from(users)
-            .where(eq(users.id, id))
+            .where(eq(users.id, id[0].insertId as number))
             .then((res) => res[0])
     }
 
@@ -88,7 +110,7 @@ export class User {
         // ...
     }
 
-    async getUser(id: string) {
+    async getUser(id: number) {
         const user = await this.client
             .select()
             .from(users)
