@@ -27,6 +27,7 @@
       display: flex;
       flex-direction: column;
       overflow-y: auto;
+      gap: .5rem;
 
       @apply scrollbar;
     }
@@ -62,6 +63,15 @@
 .chat-message {
   display: flex;
   flex-direction: row;
+  gap: .75rem;
+  color: var(--color-prim-text);
+  padding: .4rem;
+  border-radius: 1rem;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  &:hover {
+    background-color: var(--color-prim-bg-3-4);
+  }
 
   .message-avatar {
     display: flex;
@@ -84,7 +94,16 @@
     flex-direction: column;
     
     .message-credentials {
-      
+      display: flex;
+      flex-direction: row;
+      gap: .5rem;
+      align-items: center;
+      font-size: 0.75em;
+
+      .message-date {
+        font-size: 0.75em;
+        color: var(--color-prim-text);
+      }
     }
   }
 }
