@@ -33,6 +33,17 @@ export const channels = mysqlTable("channels", {
 	}
 });
 
+export const computers = mysqlTable("computers", {
+	id: serial("id").notNull(),
+	brand: varchar("brand", { length: 256 }).notNull(),
+	cores: int("cores").notNull(),
+},
+(table) => {
+	return {
+		computersId: primaryKey(table.id),
+	}
+});
+
 export const message = mysqlTable("message", {
 	id: int("id").autoincrement().notNull(),
 	fromUserId: int("from_user_id").references(() => users.id),
