@@ -1,0 +1,73 @@
+@import '../utils/scrollbar.scss';
+
+$nav-item-spacing: 0.75rem;
+
+.sidenav {
+    display: flex;
+    flex-direction: column;
+    gap: $nav-item-spacing;
+    padding: .75rem;
+    overflow: hidden;
+    
+    ul {
+        display: block;
+        // flex-direction: column;
+
+        
+        // gap: $nav-item-spacing;
+        
+        // padding: 0;
+        // margin: 0;
+        height: 100%;
+        // list-style: none;
+
+        overflow-y: scroll;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+}
+
+.nav-item {
+    width: 100%;
+    aspect-ratio: 1/1;
+    margin-bottom: .75rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        background-color: var(--color-prim-bg);
+        border-radius: 4rem;
+        transition: all 200ms ease-out;
+    }
+
+    &.active,
+    &:hover,
+    &:focus,
+    &:active {
+        a {
+            border-radius: 1.5rem;
+            transition: all 200ms ease-in;
+
+        }
+    }
+}
+
+.nav-seperator {
+    display: block;
+    width: 80%;
+    height: 2px;
+    background-color: var(--color-prim-bg);
+    border-radius: 99rem;
+    margin: 0 auto;
+    margin-bottom: .75rem;
+}
