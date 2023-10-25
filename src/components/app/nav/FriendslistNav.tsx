@@ -48,7 +48,7 @@ export default async function FriendslistNav() {
         <p>Direct messages</p>
 
         <ul>
-        {friends.map((friend) => (
+        {friends.map((friend:any) => (
             <FriendItem user={friend} />
           ))}
 
