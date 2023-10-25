@@ -13,28 +13,29 @@ export default function Chat() {
     await fetch("/api/socket");
     console.log("socket initialized");
 
-    socket = io('http://localhost:3000/', {
+    socket = io('http://localhost:3000', {
       path: "/api/socket.io",
+      addTrailingSlash: false,
     });
     console.log(socket);
 
-    socket.on("receive-message", (data: any) => {
+    socket.once("receive-message", (data: any) => {
       // setAllMessages((pre) => [...pre, data]);
     });
     // return socket
   }
 
   useEffect(() => {
-    (async () => {
-      await socketInitializer();
+    socketInitializer();
 
       return () => {
-        console.log(socket);
+        if(socket) {
+          socket.disconnect();
+          socket = null;
+        }
 
-        socket.disconnect();
       };
-    })()
-  }, []);
+  }, [socket]);
 
   const testMsg = {username: 'test', message: 'test', date: '2023-10-23T08:02:44.529Z' }
   return (

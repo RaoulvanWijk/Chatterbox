@@ -49,7 +49,7 @@ export default async function FriendslistNav() {
 
         <ul>
         {friends.map((friend:any) => (
-            <FriendItem user={friend} />
+            <FriendItem key={friend.id} user={friend} />
           ))}
 
 
