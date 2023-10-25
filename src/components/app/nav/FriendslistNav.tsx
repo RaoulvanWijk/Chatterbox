@@ -2,14 +2,26 @@ import React from "react";
 import Link from "next/link";
 import FriendItem from "../chat/friends/FriendItem";
 import "@resources/styles/components/friendsList.scss";
+import { cookies } from 'next/headers'
 
-export default function FriendslistNav() {
-  const user = {
-    username: "Username",
-    discriminator: "1234",
-    avatar: "UC",
-    id: "123456",
+export default async function FriendslistNav() {
+  const token = (cookies().get('authToken')?.value ?? '');
+  const getFriends = async () => {
+    const res = await fetch(process.env.SERVER_URL + "/api/friends", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + token ?? "",
+      },
+    });
+    return await res.json();
+    // console.log(friends);
   };
+
+  const res = await getFriends();
+  const friends = res.friends;
+  const user = res.user;
+
   return (
     <div className="app-layout-content friends-list">
       <button className="conversation-btn">
@@ -36,6 +48,12 @@ export default function FriendslistNav() {
         <p>Direct messages</p>
 
         <ul>
+        {friends.map((friend) => (
+            <FriendItem user={friend} />
+          ))}
+
+
+          {/* <FriendItem user={user} />
           <FriendItem user={user} />
           <FriendItem user={user} />
           <FriendItem user={user} />
@@ -59,14 +77,13 @@ export default function FriendslistNav() {
           <FriendItem user={user} />
           <FriendItem user={user} />
           <FriendItem user={user} />
-          <FriendItem user={user} />
-          <FriendItem user={user} />
+          <FriendItem user={user} /> */}
         </ul>
       </div>
 
       <div className="user-display">
         <p>
-          <span>UC</span>ThatDutchGuy
+          <span>{user.username.split('')[0].toUpperCase()+user.username.split('')[1].toUpperCase()}</span>{user.username}#{user.userTag}
         </p>
         <button className="settings-btn">
           <svg
