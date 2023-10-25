@@ -11,6 +11,10 @@ export default function SocketHandler(req: NextApiRequest,
 
         const io = new Server(socket.server, {
             path: "/api/socket.io",
+            cors: {
+                origin: "*",
+                methods: ["GET", "POST"],
+            },
         });
 
         if (!socket.server.io) {
