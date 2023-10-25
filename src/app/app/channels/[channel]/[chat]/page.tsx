@@ -16,7 +16,7 @@ export default function page() {
     await fetch("/api/socket");
     console.log("socket initialized");
 
-    socket = io('http://localhost:3000/', {
+    socket = io('http://ryvanwijk.nl:3000/', {
       path: "/api/socket.io",
     });
     console.log(socket);
