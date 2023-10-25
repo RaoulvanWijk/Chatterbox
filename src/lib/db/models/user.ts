@@ -1,4 +1,4 @@
-import { users } from "../schema/schema"
+import { users, usersFriends } from "../schema/schema"
 import {
     int,
     timestamp,
@@ -8,7 +8,7 @@ import {
     MySqlTableFn,
     MySqlDatabase,
 } from "drizzle-orm/mysql-core"
-import { and, eq } from "drizzle-orm"
+import { and, eq, or, ne } from "drizzle-orm"
 
 export interface IUser {
     username: string;
@@ -136,5 +136,36 @@ export class User {
                 .then((res) => res[0])) ?? null
 
         return user
+    }
+
+    async getFriends(userId: number) {
+        const friends = (await this.client
+                .select({
+                    id: users.id,
+                    username: users.username,
+                    tag: users.tag,
+                    email: users.email,
+                }
+                )
+                .from(usersFriends)
+                .where(
+                    or(
+                        eq(usersFriends.fromFriendId, userId), 
+                        eq(usersFriends.toFriendId, userId)
+                    )
+                )
+                .innerJoin(users, or(
+                    and(
+                        eq(users.id, usersFriends.fromFriendId),
+                        ne(users.id, userId)
+                        ) ,
+                    and(
+                        eq(users.id, usersFriends.toFriendId),
+                        ne(users.id, userId)
+                        ),
+                    )
+                )
+                .then((res) => res)) ?? null
+        return friends
     }
 }
