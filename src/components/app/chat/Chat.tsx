@@ -7,37 +7,28 @@ import { useEffect } from 'react'
 import { io, Socket } from 'socket.io-client'
 
 export default function Chat() {
-
   let socket: any
-  async function socketInitializer() {
-    await fetch("/api/socket");
-    console.log("socket initialized");
-
-    socket = io('http://localhost:3000', {
-      path: "/api/socket.io",
-      addTrailingSlash: false,
-    });
-    console.log(socket);
-
-    socket.once("receive-message", (data: any) => {
-      // setAllMessages((pre) => [...pre, data]);
-    });
-    // return socket
-  }
 
   useEffect(() => {
-    socketInitializer();
+    socket = io('http://localhost:3000', {
+      // transports: ["websocket", "polling"],
+      // upgrade: false,
+      path: "/api/socket",
+      addTrailingSlash: false,
+    });
+    console.log("socket initialized", socket);
+    return () => {
+      if (socket) {
+        console.log("socket disconnected");
+        
+        socket.disconnect();
+        socket = null;
+      }
 
-      return () => {
-        if(socket) {
-          socket.disconnect();
-          socket = null;
-        }
-
-      };
+    };
   }, [socket]);
 
-  const testMsg = {username: 'test', message: 'test', date: '2023-10-23T08:02:44.529Z' }
+  const testMsg = { username: 'test', message: 'test', date: '2023-10-23T08:02:44.529Z' }
   return (
     <div className='chat-container'>
       <div className="active-chat-user app-layout-content">
