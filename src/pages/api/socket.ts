@@ -1,5 +1,6 @@
 import { Server } from "socket.io";
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { parseJWT } from "../../lib/auth/AuthValidation";
 
 export default function SocketHandler(req: NextApiRequest, res: NextApiResponse) {
     if (!res.socket) {
@@ -28,15 +29,25 @@ export default function SocketHandler(req: NextApiRequest, res: NextApiResponse)
     }
     const io = socket.io as Server;
 
-    io.on("connection", (socket) => {
+    io.on("connection", async (socket) => {
         console.log("Socket connected: " + socket.id);
+        const user = await parseJWT(req.cookies.authToken as string);
+        socket.join('private:' + user?.userId)
         // socket.on("send-message", (obj) => {
         //     io.emit("receive-message", obj);
         // });
-        socket.on('disconnect', function(){
-            console.log("client has disconnected:"+socket.id);
+        io.to("private:" + user?.userId).emit("message", "Hello from server")
+        socket.on('disconnect', function () {
+            console.log("client has disconnected:" + socket.id);
         });
-    });
 
+        socket.on("sendMessage", async (props) => {
+            const user = await parseJWT(req.cookies.authToken as string);
+            console.log(props);
+            io.to("private:" + user?.userId).emit("recieveMessage", props.message)
+        })
+        
+    });
+    
     res.end();
 }

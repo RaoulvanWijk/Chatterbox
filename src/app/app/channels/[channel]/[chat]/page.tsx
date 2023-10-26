@@ -7,12 +7,13 @@ import Chat from '@/components/app/chat/Chat'
 import ChatUsers from '@/components/app/chat/ChatUsers'
 
 
-export default function page() {
+export default function page(id: any) {
   return (
     <main className="appBackground">
+      {id.channel}
       <Sidenav />
       <FriendslistNav />
-      <Chat />
+      <Chat channel="@me" chat={id} />
       <ChatUsers />
     </main>
   )

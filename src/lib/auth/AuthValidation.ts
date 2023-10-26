@@ -37,3 +37,15 @@ export const validateJWT = async (token: string, newToken: boolean = false) : Pr
     return undefined;
   }
 };
+
+export const parseJWT = async (token: string) : Promise<UserJWT | undefined> => {
+  try {
+    const payload = (await jwtVerify(
+      token,
+      new TextEncoder().encode(process.env.JWT_SECRET)
+    )).payload as UserJWT;
+    return payload;
+  } catch (err) {
+    return undefined;
+  }
+}

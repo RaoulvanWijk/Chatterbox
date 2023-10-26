@@ -25,7 +25,7 @@
     overflow: hidden;
     ul {
       display: flex;
-      flex-direction: column;
+      flex-direction: column-reverse;
       overflow-y: auto;
       gap: .5rem;
 
