@@ -8,6 +8,13 @@
       "when": 1698221142741,
       "tag": "0000_blue_galactus",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1698323674188,
+      "tag": "0001_curved_paibok",
+      "breakpoints": true
     }
   ]
 }

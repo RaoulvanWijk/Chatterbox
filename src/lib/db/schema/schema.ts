@@ -37,8 +37,8 @@ export const message = mysqlTable("message", {
 	id: int("id").autoincrement().notNull(),
 	fromUserId: int("from_user_id").references(() => users.id),
 	message: text("message"),
-	createdAt: timestamp("created_at", { mode: 'string' }),
-	updatedAt: timestamp("updated_at", { mode: 'string' }),
+	createdAt: timestamp("created_at", { mode: 'string' }).default(sql`CURRENT_TIMESTAMP`),
+	updatedAt: timestamp("updated_at", { mode: 'string' }).default(sql`CURRENT_TIMESTAMP`),
 },
 (table) => {
 	return {
@@ -51,8 +51,8 @@ export const servers = mysqlTable("servers", {
 	id: int("id").autoincrement().notNull(),
 	serverName: varchar("server_name", { length: 30 }).notNull(),
 	serverIcon: varchar("server_icon", { length: 255 }),
-	createdAt: timestamp("created_at", { mode: 'string' }),
-	updatedAt: timestamp("updated_at", { mode: 'string' }),
+	createdAt: timestamp("created_at", { mode: 'string' }).default(sql`CURRENT_TIMESTAMP`),
+	updatedAt: timestamp("updated_at", { mode: 'string' }).default(sql`CURRENT_TIMESTAMP`),
 },
 (table) => {
 	return {
