@@ -1,6 +1,8 @@
 import { Server } from "socket.io";
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { parseJWT } from "../../lib/auth/AuthValidation";
+import { db } from "@/lib/db/index";
+import { Chat } from "@/lib/db/models/chats";
 
 export default function SocketHandler(req: NextApiRequest, res: NextApiResponse) {
     if (!res.socket) {
@@ -36,7 +38,7 @@ export default function SocketHandler(req: NextApiRequest, res: NextApiResponse)
         // socket.on("send-message", (obj) => {
         //     io.emit("receive-message", obj);
         // });
-        io.to("private:" + user?.userId).emit("message", "Hello from server")
+
         socket.on('disconnect', function () {
             console.log("client has disconnected:" + socket.id);
         });
@@ -46,7 +48,12 @@ export default function SocketHandler(req: NextApiRequest, res: NextApiResponse)
             console.log(props);
             io.to("private:" + user?.userId).emit("recieveMessage", props.message)
         })
-        
+
+        // socket.once("setupChat", async (props) => {
+        //     const chatM = new Chat(db);
+        //     const messages = await chatM.getMessagesToUser(1, 2);
+        //     io.to("private:" + user?.userId).emit("socketInit", messages)
+        // })
     });
     
     res.end();

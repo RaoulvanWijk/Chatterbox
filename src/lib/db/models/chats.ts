@@ -1,4 +1,4 @@
-import { userMessages, message as Tmessage } from "../schema/schema"
+import { userMessages, message as Tmessage, users } from "../schema/schema"
 import {
     int,
     timestamp,
@@ -8,7 +8,8 @@ import {
     MySqlTableFn,
     MySqlDatabase,
 } from "drizzle-orm/mysql-core"
-import { and, eq, or, ne, asc, desc } from "drizzle-orm"
+import { and, eq, or, ne, asc, desc, inArray } from "drizzle-orm"
+import { User } from "./user";
 
 export interface IChat {
     fromUserId: number;
@@ -74,7 +75,7 @@ export class Chat {
     }
 
     async getMessagesToUser(userId: number, friendId: number) {
-        return await this.client
+        let messages = await this.client
             .select().from(userMessages)
             .innerJoin(Tmessage, or(
                 and(
@@ -85,6 +86,25 @@ export class Chat {
                     eq(userMessages.toUserId, friendId),
                     eq(Tmessage.fromUserId, userId)
                 )
-            )).orderBy(desc(Tmessage.createdAt)).execute()
+            ))
+            .orderBy(desc(Tmessage.createdAt)).execute()
+                
+        // Get all fromUserId from the messages
+        let uniqueUsers: any[] =[];
+        if(messages.length !== 0) {
+            let fromUserIds = [0];
+            for(let i = 0; i < messages.length; i++) {
+                fromUserIds.push(messages[i].message.fromUserId as number);
+            }
+            // fromUserIds: (number|null)[] = messages.map((message) => message.message.fromUserId);
+            if(fromUserIds.length !== 0) {
+                uniqueUsers = await this.client.select().from(users).where(inArray(users.id, fromUserIds)).execute();
+            }
+        }
+        console.log(uniqueUsers);
+        return {
+            messages: messages,
+            uniqueUsers: uniqueUsers
+        }
     }
 }
