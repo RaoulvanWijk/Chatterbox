@@ -75,7 +75,8 @@ export class Chat {
     async getMessagesToUser(userId: number, friendId: number) {
         let messages = await this.client
             .select().from(userMessages)
-            .innerJoin(Tmessage, or(
+            .innerJoin(Tmessage, eq(userMessages.messageId, Tmessage.id))
+            .where(or(
                 and(
                     eq(userMessages.toUserId, userId),
                     eq(Tmessage.fromUserId, friendId)
@@ -84,9 +85,12 @@ export class Chat {
                     eq(userMessages.toUserId, friendId),
                     eq(Tmessage.fromUserId, userId)
                 )
-            ))
+            )
+            )
             .orderBy(desc(Tmessage.createdAt)).execute()
                 
+            console.log(messages);
+            
         // Get all fromUserId from the messages
         let uniqueUsers: any[] =[];
         if(messages.length !== 0) {

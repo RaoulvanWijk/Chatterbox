@@ -37,7 +37,7 @@ export default function SocketHandler(
 
   io.on("connection", async (socket) => {
     console.log("Socket connected: " + socket.id);
-    const user = await parseJWT(req.cookies.authToken as string);
+    // const user = await parseJWT(req.cookies.authToken as string);
     // socket.join('private:' + user?.userId)
     // socket.on("send-message", (obj) => {
     //     io.emit("receive-message", obj);
@@ -47,12 +47,13 @@ export default function SocketHandler(
       console.log("client has disconnected:" + socket.id);
     });
 
+    
     socket.on("sendMessage", async (props) => {
-      const user = await parseJWT(req.cookies.authToken as string);
-        console.log(props, user);
+        const user = await parseJWT(props.token as string);
         const chatM = new Chat(db);
         const userM = new User(db);
         const friend = await userM.getUserFromUserFriendsId(props.chatProps.chat, user?.userId ?? 0)
+        console.log(user);
         
         const messageToSave = {
             fromUserId: user?.userId ?? 0,
@@ -60,19 +61,21 @@ export default function SocketHandler(
             message: props.message.message,
         }
         await chatM.sendMessage(messageToSave);
-
+        
         const message = {
             message : props.message.message,
             username: user?.username ?? "unknown",
             date: new Date().toISOString(),
         }
-      io.to("private:" + props.chatProps.chat).emit("recieveMessage", message);
+        console.log(props);
+        
+        io.to("private:" + props.chatProps.chat).emit("recieveMessage", message);
     });
-
+    
     socket.on("joinRoom", async (roomId) => {
       socket.join("private:" + roomId);
     });
-
+    
     // socket.once("setupChat", async (props) => {
     //     const chatM = new Chat(db);
     //     const messages = await chatM.getMessagesToUser(1, 2);

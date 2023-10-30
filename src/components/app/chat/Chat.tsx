@@ -6,7 +6,7 @@ import Message from './Message'
 import { useEffect, use } from 'react'
 import { io, Socket } from 'socket.io-client'
 
-export default function Chat({ chatProps, msgs, chatTitle, user }: any) {
+export default function Chat({ chatProps, msgs, chatTitle, user, userToken }: any) {
   let socket = useRef<Socket | null>(null)
 
   let [messages, setMessages] = React.useState(msgs)
@@ -40,7 +40,7 @@ export default function Chat({ chatProps, msgs, chatTitle, user }: any) {
       }
 
     };
-  }, [socket, messages]);
+  }, [socket, messages, chatProps.chat]);
 
   const sendMessage = (e: any) => {
     e.preventDefault()
@@ -52,7 +52,8 @@ export default function Chat({ chatProps, msgs, chatTitle, user }: any) {
       message: {
         message,
         date: new Date()
-      }
+      },
+      token : userToken
     })
     e.target.message.value = ''
   }

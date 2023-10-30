@@ -47,13 +47,11 @@ export default async function page(id: ChatProps) {
     token,
     new TextEncoder().encode(process.env.JWT_SECRET)
   );
-  console.log(user.payload);
-  
   return (
     <main className="appBackground">
       <Sidenav />
       <FriendslistNav />
-      <Chat chatProps={id.params} msgs={res.messages} chatTitle={res.chatTitle} user={user.payload}/>
+      <Chat chatProps={id.params} msgs={res.messages} chatTitle={res.chatTitle} user={user.payload} userToken={(cookies().get('authToken')?.value ?? '')}/>
       <ChatUsers />
     </main>
   )

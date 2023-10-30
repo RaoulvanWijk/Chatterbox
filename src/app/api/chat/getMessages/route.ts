@@ -18,10 +18,9 @@ export async function POST(request: NextRequest) {
     const friend = await userM.getUserFromUserFriendsId(body.chatId, usr?.userId ?? 0)
     
     if(usr === undefined) {
-        
         return NextResponse.json({ error: "Invalid token" })
     }
-    const messages = await chatM.getMessagesToUser(1, friend.id);
+    const messages = await chatM.getMessagesToUser(usr?.userId, friend.id);
 
     const msgs = messages.messages.map((msg: any) => {
         const usr = messages.uniqueUsers.find((user: any) => {
@@ -33,6 +32,5 @@ export async function POST(request: NextRequest) {
             date: msg.message.updatedAt ?? msg.message.createdAt,
         }
     })
-
     return NextResponse.json({ messages: msgs, friend: friend })
 }
