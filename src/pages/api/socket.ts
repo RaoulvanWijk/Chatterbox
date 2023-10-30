@@ -45,7 +45,7 @@ export default function SocketHandler(req: NextApiRequest, res: NextApiResponse)
 
         socket.on("sendMessage", async (props) => {
             const user = await parseJWT(req.cookies.authToken as string);
-            console.log(props);
+
             io.to("private:" + user?.userId).emit("recieveMessage", props.message)
         })
 

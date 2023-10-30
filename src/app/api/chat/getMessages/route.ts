@@ -16,8 +16,7 @@ export async function POST(request: NextRequest) {
     const tkn = request.headers.get('Authorization')?.replace('Bearer ', '') ?? ''
     const usr = await parseJWT(tkn)
     const friend = await userM.getUserFromUserFriendsId(body.chatId, usr?.userId ?? 0)
-
-    console.log(usr, friend);
+    
     if(usr === undefined) {
         
         return NextResponse.json({ error: "Invalid token" })
@@ -35,5 +34,5 @@ export async function POST(request: NextRequest) {
         }
     })
 
-    return NextResponse.json({ messages: msgs })
+    return NextResponse.json({ messages: msgs, friend: friend })
 }

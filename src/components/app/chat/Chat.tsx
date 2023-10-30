@@ -9,9 +9,9 @@ import { set } from 'zod'
 
 
 
-export default function Chat({ chatProps, msgs }: any) {
+export default function Chat({ chatProps, msgs, chatTitle }: any) {
   let socket = useRef<Socket | null>(null)
-  
+
   let [messages, setMessages] = React.useState(msgs)
 
   useEffect(() => {
@@ -57,7 +57,7 @@ export default function Chat({ chatProps, msgs }: any) {
   return (
     <div className='chat-container'>
       <div className="active-chat-user app-layout-content">
-        <p>Username#1234</p>
+        <p>{chatTitle}</p>
       </div>
       <div className="app-layout-content chat-content">
         <ul>

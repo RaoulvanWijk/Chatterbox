@@ -14,7 +14,12 @@ type ChatProps = {
   }
 };
 
-const getMessages = async (chatID: string): Promise<[]> => {  
+type getMessagesResponse = {
+  messages: [];
+  chatTitle: string;
+};
+
+const getMessages = async (chatID: string): Promise<getMessagesResponse> => {  
   const data = await fetch(process.env.SERVER_URL + "/api/chat/getMessages", {
     method: "POST",
     headers: {
@@ -27,17 +32,21 @@ const getMessages = async (chatID: string): Promise<[]> => {
   });
   const msgs = await data.json();
 
-  return msgs.messages;
+  return {
+    messages: msgs.messages,
+    chatTitle: msgs.friend.username + "#" + msgs.friend.tag,
+    // chatTitle: msgs[0].chatTitle,
+  };
 };
 
 export default async function page(id: ChatProps) {
-  const msgs = await getMessages(id.params.chat)
+  const res = await getMessages(id.params.chat)
   
   return (
     <main className="appBackground">
       <Sidenav />
       <FriendslistNav />
-      <Chat chatProps={id} msgs={msgs} />
+      <Chat chatProps={id} msgs={res.messages} chatTitle={res.chatTitle}/>
       <ChatUsers />
     </main>
   )

@@ -23,13 +23,13 @@ const getMessages = async (): Promise<[]> => {
 
 export default async function page(id: any) {
   const msgs = await getMessages()
-  console.log(id);
 
   return (
     <main className="appBackground">
       <Sidenav />
       <FriendslistNav />
-      <Chat chatProps={id} msgs={msgs} />
+      {/* <Chat chatProps={id} msgs={msgs} /> */}
+      <ChatUsers />
       <ChatUsers />
     </main>
   )
