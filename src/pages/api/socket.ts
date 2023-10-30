@@ -69,7 +69,7 @@ export default function SocketHandler(
         }
         console.log(props);
         
-        io.to("private:" + props.chatProps.chat).emit("recieveMessage", message);
+        io.in("private:" + props.chatProps.chat).emit("recieveMessage", message);
     });
     
     socket.on("joinRoom", async (roomId) => {
