@@ -46,17 +46,17 @@ export default function register() {
       <h1 className="title">Welcome new user!</h1>
       <p className="text">We are happy for you to join us!</p>
       <label htmlFor="username">Username</label>
-      <input type="text" id="username" {...register("username")} />
+      <input type="text" id="username" autoComplete="username" {...register("username")} />
       {errors.username && (
         <p className="text-red-500">{`${errors.username.message}`}</p>
       )}
       <label htmlFor="email">Email</label>
-      <input type="email" id="email" {...register("email")} />
+      <input type="email" id="email" autoComplete="email mail" {...register("email")} />
       {errors.email && (
         <p className="text-red-500">{`${errors.email.message}`}</p>
       )}
       <label htmlFor="password">Password</label>
-      <input type="password" id="password" {...register("password")} />
+      <input type="password" id="password" autoComplete="current-password" {...register("password")} />
       {errors.password && (
         <p className="text-red-500">{`${errors.password.message}`}</p>
       )}

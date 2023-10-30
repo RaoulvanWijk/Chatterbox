@@ -46,12 +46,12 @@ export default function login() {
       <h1 className="title">Welcome back!</h1>
       <p className="text">We are happy to see you back!</p>
       <label htmlFor="email">Email</label>
-      <input type="text" id="email" {...register("email")} />
+      <input type="text" id="email" autoComplete="email mail" {...register("email")} />
       {errors.email && (
         <p className="text-red-500">{`${errors.email.message}`}</p>
       )}
       <label htmlFor="password">Password</label>
-      <input type="password" id="password" {...register("password")} />
+      <input type="password" id="password" autoComplete="password wachtwoord" {...register("password")} />
       {errors.password && (
         <p className="text-red-500">{`${errors.password.message}`}</p>
       )}

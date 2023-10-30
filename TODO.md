@@ -1,0 +1,1 @@
+Use user_friends id for chat rooms for the realtime part

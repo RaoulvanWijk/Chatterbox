@@ -19,13 +19,13 @@
   .chat-content {
     display: flex;
     flex-direction: column;
-    justify-content: end;
+    justify-content: flex-end;
     flex: 1;
     padding: .75rem;
     overflow: hidden;
     ul {
       display: flex;
-      flex-direction: column;
+      flex-direction: column-reverse;
       overflow-y: auto;
       gap: .5rem;
 

@@ -1,6 +1,3 @@
-"use client"
-import { useEffect } from 'react'
-import { io, Socket } from 'socket.io-client'
 
 import LogoutButton from '@/components/auth/LogoutButton'
 import "@resources/styles/pages/app.scss"
@@ -8,44 +5,53 @@ import Sidenav from '@/components/app/nav/Sidenav'
 import FriendslistNav from '@/components/app/nav/FriendslistNav'
 import Chat from '@/components/app/chat/Chat'
 import ChatUsers from '@/components/app/chat/ChatUsers'
+import { jwtVerify } from "jose";
+import { cookies } from 'next/headers'
 
-
-export default function page() {
-  let socket: any
-  async function socketInitializer() {
-    await fetch("/api/socket");
-    console.log("socket initialized");
-
-    socket = io('http://ryvanwijk.nl:3000/', {
-      path: "/api/socket.io",
-    });
-    console.log(socket);
-
-    socket.on("receive-message", (data: any) => {
-      // setAllMessages((pre) => [...pre, data]);
-    });
-    // return socket
+type ChatProps = {
+  params: {
+    channel: string;
+    chat: string;
   }
+};
 
-  useEffect(() => {
-    (async () => {
-      await socketInitializer();
+type getMessagesResponse = {
+  messages: [];
+  chatTitle: string;
+};
 
-      return () => {
-        console.log(socket);
+const getMessages = async (chatID: string): Promise<getMessagesResponse> => {  
+  const data = await fetch(process.env.SERVER_URL + "/api/chat/getMessages", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + cookies().get("authToken")?.value,
+    },
+    body: JSON.stringify({
+      chatId: chatID,
+    }),
+  });
+  const msgs = await data.json();
 
-        socket.disconnect();
-      };
-    })()
-  }, []);
+  return {
+    messages: msgs.messages,
+    chatTitle: msgs.friend.username + "#" + msgs.friend.tag,
+    // chatTitle: msgs[0].chatTitle,
+  };
+};
 
-
-
+export default async function page(id: ChatProps) {
+  const res = await getMessages(id.params.chat)
+  const token = (cookies().get('authToken')?.value ?? '');
+  const user = await jwtVerify(
+    token,
+    new TextEncoder().encode(process.env.JWT_SECRET)
+  );
   return (
     <main className="appBackground">
       <Sidenav />
       <FriendslistNav />
-      <Chat />
+      <Chat chatProps={id.params} msgs={res.messages} chatTitle={res.chatTitle} user={user.payload} userToken={(cookies().get('authToken')?.value ?? '')}/>
       <ChatUsers />
     </main>
   )
