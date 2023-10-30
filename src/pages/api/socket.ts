@@ -20,7 +20,7 @@ export default function SocketHandler(
   }
 
   if (!socket.io) {
-    console.log("*First use, starting Socket.IO");
+    // console.log("*First use, starting Socket.IO");
     const io = new Server(socket.server, {
       path: "/api/socket",
       addTrailingSlash: false,
@@ -31,12 +31,12 @@ export default function SocketHandler(
       },
     });
     socket.io = io;
-    console.log("Socket server created: " + io.path());
+    // console.log("Socket server created: " + io.path());
   }
   const io = socket.io as Server;
 
   io.on("connection", async (socket) => {
-    console.log("Socket connected: " + socket.id);
+    // console.log("Socket connected: " + socket.id);
     // const user = await parseJWT(req.cookies.authToken as string);
     // socket.join('private:' + user?.userId)
     // socket.on("send-message", (obj) => {
@@ -44,7 +44,7 @@ export default function SocketHandler(
     // });
 
     socket.on("disconnect", function () {
-      console.log("client has disconnected:" + socket.id);
+      // console.log("client has disconnected:" + socket.id);
     });
 
     
@@ -53,7 +53,7 @@ export default function SocketHandler(
         const chatM = new Chat(db);
         const userM = new User(db);
         const friend = await userM.getUserFromUserFriendsId(props.chatProps.chat, user?.userId ?? 0)
-        console.log(user);
+        // console.log(user);
         
         const messageToSave = {
             fromUserId: user?.userId ?? 0,
@@ -67,7 +67,7 @@ export default function SocketHandler(
             username: user?.username ?? "unknown",
             date: new Date().toISOString(),
         }
-        console.log(props);
+        // console.log(props);
         
         io.in("private:" + props.chatProps.chat).emit("recieveMessage", message);
     });

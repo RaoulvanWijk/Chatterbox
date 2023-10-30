@@ -89,7 +89,7 @@ export class Chat {
             )
             .orderBy(desc(Tmessage.createdAt)).execute()
                 
-            console.log(messages);
+            // console.log(messages);
             
         // Get all fromUserId from the messages
         let uniqueUsers: any[] =[];

@@ -24,20 +24,20 @@ app.get("/api/socket-test", (req, res) => {
     res.end();
 
   io.on("connection", (socket) => {
-      console.log("Socket connected: " + socket.id);
+      // console.log("Socket connected: " + socket.id);
       // socket.on("send-message", (obj) => {
       //     io.emit("receive-message", obj);
       // });
       socket.on('disconnect', function(){
-          console.log("client has disconnected:"+socket.id);
+          // console.log("client has disconnected:"+socket.id);
       });
   });
 
-  console.log("Setting up socket");
+  // console.log("Setting up socket");
   res.end();
 });
 
 
 app.listen(3000, () => {
-  console.log("Server running on port 3000");
+  // console.log("Server running on port 3000");
 });

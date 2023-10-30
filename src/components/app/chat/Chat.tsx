@@ -21,7 +21,7 @@ export default function Chat({ chatProps, msgs, chatTitle, user, userToken }: an
     });
 
     socket.current.on("recieveMessage", (data: any) => {
-      console.log("message received", data, messages);
+      // console.log("message received", data, messages);
       // debugger
       setMessages([data, ...messages]);
     });
@@ -30,10 +30,10 @@ export default function Chat({ chatProps, msgs, chatTitle, user, userToken }: an
       socket.current?.emit("joinRoom", chatProps.chat);
     });
 
-    console.log("socket initialized", socket);
+    // console.log("socket initialized", socket);
     return () => {
       if (socket.current) {
-        console.log("socket disconnected");
+        // console.log("socket disconnected");
 
         socket.current.disconnect();
         socket.current = null;
