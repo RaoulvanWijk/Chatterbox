@@ -29,7 +29,6 @@ export async function POST(request: NextRequest) {
             }
         })
     } catch (error: unknown) {
-        console.log(error)
         if (error instanceof Error) {
             return NextResponse.json({
                 error: error.message

@@ -48,7 +48,6 @@ export class Chat {
     }
 
     async sendMessage(data: IChat) {
-        console.log(data);
         const messageCredentials = {
             fromUserId: data.fromUserId as number,
             message: data.message,
@@ -57,7 +56,6 @@ export class Chat {
         }
 
         const message = await this.client.insert(Tmessage).values(messageCredentials).execute() as insertResult;
-        console.log(message[0].insertId);
         
         const userMessageCredentials = {
             messageId: message[0].insertId as number,
@@ -101,7 +99,6 @@ export class Chat {
                 uniqueUsers = await this.client.select().from(users).where(inArray(users.id, fromUserIds)).execute();
             }
         }
-        console.log(uniqueUsers);
         return {
             messages: messages,
             uniqueUsers: uniqueUsers

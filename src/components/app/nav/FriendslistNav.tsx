@@ -15,11 +15,11 @@ export default async function FriendslistNav() {
       },
     });
     return await res.json();
-    // console.log(friends);
   };
 
   const res = await getFriends();
   const friends = res.friends;
+  
   const user = res.user;
 
   return (

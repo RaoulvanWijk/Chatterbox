@@ -11,7 +11,8 @@ export type MessageProps = {
 
 export default function Message(messageProps: MessageProps) {
     const message = messageProps.message
-
+    console.log(message);
+    
     let covertedDate = new Date(message.date)
     let newDate
     if(covertedDate.getDate() == (new Date()).getDate()) {

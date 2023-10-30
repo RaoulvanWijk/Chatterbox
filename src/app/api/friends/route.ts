@@ -8,7 +8,6 @@ export async function GET(request: NextRequest) {
   // if(!request.body) {
   //   return NextResponse.json({ message: 'Empty body' }, { status: 401 })
   // }
-    // console.log(cookies().getAll());
     const token = request.headers.get('Authorization')?.replace('Bearer ', '');
     
     const payload = await validateJWT(token ?? '');
