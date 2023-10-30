@@ -41,7 +41,7 @@ export default function Message(messageProps: MessageProps) {
     return (
         <li className='chat-message'>
             <div className='message-avatar'>
-                <p>T</p>
+                <p>{message.username.split("")[0].toUpperCase()+message.username.split("")[1].toUpperCase()}</p>
             </div>
 
             <div className='message-content'>
