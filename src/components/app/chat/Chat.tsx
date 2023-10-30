@@ -5,11 +5,8 @@ import "@resources/styles/components/chat.scss"
 import Message from './Message'
 import { useEffect, use } from 'react'
 import { io, Socket } from 'socket.io-client'
-import { set } from 'zod'
 
-
-
-export default function Chat({ chatProps, msgs, chatTitle }: any) {
+export default function Chat({ chatProps, msgs, chatTitle, user }: any) {
   let socket = useRef<Socket | null>(null)
 
   let [messages, setMessages] = React.useState(msgs)
@@ -26,7 +23,11 @@ export default function Chat({ chatProps, msgs, chatTitle }: any) {
     socket.current.on("recieveMessage", (data: any) => {
       console.log("message received", data, messages);
       // debugger
-      setMessages([{ username: 'test', message: data, date: '2023-10-23T08:02:44.529Z' }, ...messages]);
+      setMessages([data, ...messages]);
+    });
+
+    socket.current.on("connect", () => {
+      socket.current?.emit("joinRoom", chatProps.chat);
     });
 
     console.log("socket initialized", socket);
@@ -48,12 +49,14 @@ export default function Chat({ chatProps, msgs, chatTitle }: any) {
     if (!socket.current) return console.log('socket not initialized')
     socket.current.emit('sendMessage', {
       chatProps,
-      message
+      message: {
+        message,
+        date: new Date()
+      }
     })
     e.target.message.value = ''
   }
 
-  const testMsg = { username: 'test', message: 'test', date: '2023-10-23T08:02:44.529Z' }
   return (
     <div className='chat-container'>
       <div className="active-chat-user app-layout-content">
@@ -62,7 +65,7 @@ export default function Chat({ chatProps, msgs, chatTitle }: any) {
       <div className="app-layout-content chat-content">
         <ul>
           {
-            messages.map((msg, i) => {
+            messages.map((msg: any, i: number) => {
               return <Message key={i} message={msg} />
             })
           }

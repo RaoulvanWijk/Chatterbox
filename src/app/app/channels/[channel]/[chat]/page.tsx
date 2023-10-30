@@ -5,6 +5,7 @@ import Sidenav from '@/components/app/nav/Sidenav'
 import FriendslistNav from '@/components/app/nav/FriendslistNav'
 import Chat from '@/components/app/chat/Chat'
 import ChatUsers from '@/components/app/chat/ChatUsers'
+import { jwtVerify } from "jose";
 import { cookies } from 'next/headers'
 
 type ChatProps = {
@@ -41,12 +42,18 @@ const getMessages = async (chatID: string): Promise<getMessagesResponse> => {
 
 export default async function page(id: ChatProps) {
   const res = await getMessages(id.params.chat)
+  const token = (cookies().get('authToken')?.value ?? '');
+  const user = await jwtVerify(
+    token,
+    new TextEncoder().encode(process.env.JWT_SECRET)
+  );
+  console.log(user.payload);
   
   return (
     <main className="appBackground">
       <Sidenav />
       <FriendslistNav />
-      <Chat chatProps={id} msgs={res.messages} chatTitle={res.chatTitle}/>
+      <Chat chatProps={id.params} msgs={res.messages} chatTitle={res.chatTitle} user={user.payload}/>
       <ChatUsers />
     </main>
   )
